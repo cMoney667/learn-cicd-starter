@@ -18,8 +18,14 @@ jobs:
         with:
           go-version: '1.20'
 
-      - name: go test
-        run: go test -cover ./...
+      - name: Run unit tests
+        run: go test ./... -cover
+
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Run gosec
+        run: gosec ./...
 
   style:
     name: Style
@@ -34,17 +40,11 @@ jobs:
         with:
           go-version: '1.20'
 
-      - name: go fmt
+      - name: Check formatting
         run: test -z $(go fmt ./...)
-
-      - name: test -z
-        run: echo $?
 
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
-      - name: staticcheck
+      - name: Run staticcheck
         run: staticcheck ./...
-
-#      - name: test staticcheck
-#        run: echo $?
