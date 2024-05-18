@@ -45,3 +45,6 @@ jobs:
 
       - name: staticcheck
         run: staticcheck ./...
+
+      - name: test staticcheck
+        run: echo $?
